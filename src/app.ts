@@ -1,5 +1,6 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
+import { createItinerariesController } from "./use-case/itineraries";
 class App {
   private app = express();
 
@@ -15,7 +16,9 @@ class App {
   }
 
   routes() {
-    console.log('OK!');
+    this.app.post('/', (request: Request, response: Response) => {
+      return createItinerariesController.handle(request, response);
+    });
   }
 
   listen(port?: number) {
