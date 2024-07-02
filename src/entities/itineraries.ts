@@ -7,7 +7,7 @@ export interface ItinerariesProps {
 }
 
 class Itineraries {
-  id: string;
+  id?: string;
   destinations: string;
   created_at: string;
 
