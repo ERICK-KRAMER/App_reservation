@@ -1,23 +1,24 @@
+import { Accommodation } from "../../entities/accommodation/Accommodation";
 import { IAccommodation } from "../../entities/entitiesDTO";
-import { AccommodationRepository } from "../../repository/acommodation/acommodation-repository"
+import { PrismaPostgresAccommodationRepository } from "../../repository/acommodation/implementation/prisma-postgres-acommodation-repository";
 
-class CreateAcommodationUseCase {
+class CreateAccommodationUseCase {
   constructor(
-    private readonly acommodationRepository: AccommodationRepository,
+    private prismaProsgresAccommodationRepository: PrismaPostgresAccommodationRepository
   ) { }
 
   async execute(data: IAccommodation) {
-    const acommodation = this.acommodationRepository.findByName(data.name);
+    const accommodationAlreadyExist = await this.prismaProsgresAccommodationRepository.findByName(data.name);
 
-    if (acommodation) {
-      return {
-        error: "Acomodação já cadastrada",
-        acommodation: acommodation
-      }
+    if (accommodationAlreadyExist) {
+      throw new Error("Accommodation already exist");
     }
 
-    const newAcommodation = await this.acommodationRepository.create(data);
+    const newAccommodation = new Accommodation(data);
 
-    return newAcommodation;
+    await this.prismaProsgresAccommodationRepository.create(newAccommodation);
+
+    return newAccommodation
   }
-} export { CreateAcommodationUseCase };
+
+} export { CreateAccommodationUseCase };

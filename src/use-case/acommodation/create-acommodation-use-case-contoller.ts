@@ -1,19 +1,26 @@
 import { Request, Response } from "express";
-import { CreateAcommodationUseCase } from "./create-acommodation-use-case";
+import { CreateAccommodationUseCase } from "./create-acommodation-use-case";
 
-class CreateAcommodationUseCaseController {
+class CreateAccommodationUseCaseController {
 
   constructor(
-    private createAcommodationUseCase: CreateAcommodationUseCase,
+    private createAccommodationUseCase: CreateAccommodationUseCase,
   ) { }
 
   async handle(request: Request, response: Response) {
     const data = request.body;
     try {
-      const result = await this.createAcommodationUseCase.execute(data);
-      return response.status(201).json(result);
+      const result = await this.createAccommodationUseCase.execute(data);
+      return response.status(201).json({
+        message: "Acomodação criada com sucesso",
+        data: result
+      });
     } catch (error) {
-      return response.status(400).json({ message: error })
+      if (error instanceof Error) {
+        return response.status(400).json({ message: error.message });
+      } else {
+        return response.status(400).json({ message: "An unknown error occurred" });
+      }
     }
   }
-} export { CreateAcommodationUseCaseController };
+} export { CreateAccommodationUseCaseController };

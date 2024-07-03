@@ -6,5 +6,5 @@ export interface AccommodationRepository {
   delete(id: string): Promise<void>;
   findById(id: string): Promise<Accommodation>;
   findAll(): Promise<Accommodation[]>;
-  findByName(name: string): Promise<Accommodation>;
+  findByName(name: string): Promise<Accommodation | null>;
 }

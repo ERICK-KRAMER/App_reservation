@@ -4,47 +4,46 @@ import { AccommodationRepository } from "../acommodation-repository";
 class PrismaPostgresAccommodationRepository implements AccommodationRepository {
   private DB: Accommodation[] = [];
 
-  create(accommodation: Accommodation): Promise<Accommodation> {
+  async create(accommodation: Accommodation): Promise<Accommodation> {
     this.DB.push(accommodation);
-    return Promise.resolve(accommodation);
+    return accommodation;
   }
 
-  update(accommodation: Accommodation): Promise<Accommodation> {
+  async update(accommodation: Accommodation): Promise<Accommodation> {
     const index = this.DB.findIndex((a) => a.id === accommodation.id);
     if (index === -1) {
-      return Promise.reject(new Error('Accommodation not found'));
+      throw new Error('Accommodation not found');
     }
     this.DB[index] = accommodation;
-    return Promise.resolve(accommodation);
+    return accommodation;
   }
 
-  delete(id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     const index = this.DB.findIndex((a) => a.id === id);
     if (index === -1) {
-      return Promise.reject(new Error('Accommodation not found'));
+      throw new Error('Accommodation not found');
     }
     this.DB.splice(index, 1);
-    return Promise.resolve();
   }
 
-  findById(id: string): Promise<Accommodation> {
+  async findById(id: string): Promise<Accommodation> {
     const accommodation = this.DB.find((a) => a.id === id);
     if (!accommodation) {
-      return Promise.reject(new Error('Accommodation not found'));
+      throw new Error('Accommodation not found');
     }
-    return Promise.resolve(accommodation);
+    return accommodation;
   }
 
-  findAll(): Promise<Accommodation[]> {
-    return Promise.resolve(this.DB);
+  async findAll(): Promise<Accommodation[]> {
+    return this.DB;
   }
 
-  findByName(name: string): Promise<Accommodation> {
+  async findByName(name: string): Promise<Accommodation | null> {
     const accommodation = this.DB.find((a) => a.name === name);
     if (!accommodation) {
-      return Promise.reject(new Error('Accommodation not found'));
+      return null
     }
-    return Promise.resolve(accommodation);
+    return accommodation;
   }
 }
 

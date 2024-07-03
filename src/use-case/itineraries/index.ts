@@ -1,4 +1,4 @@
-import { PrismaPostGresRepository } from "../../repository/implement/prisma-postgres-repository";
+import { PrismaPostGresRepository } from "../../repository/itineraries/implement/prisma-postgres-repository";
 import { CreateItineraries } from "./create-itineraries";
 import { CreateItinerariesController } from "./create-itineraries-controller";
 

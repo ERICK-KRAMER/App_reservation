@@ -1,5 +1,5 @@
-import { Itinerary } from "../../entities/itineraries";
-import { IItinerariesRepository } from "../../repository/initeraries-repository";
+import { Itinerary } from "../../entities/itinerary/itineraries";
+import { IItinerariesRepository } from "../../repository/itineraries/initeraries-repository";
 import { CreateItinerariesDTO } from "./create-itinerariesDTO";
 
 class CreateItineraries {
