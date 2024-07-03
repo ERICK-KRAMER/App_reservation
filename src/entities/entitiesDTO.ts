@@ -15,6 +15,7 @@ export interface IActivity {
 }
 
 export interface IAccommodation {
+  id: string;
   name: string;
   address: string;
   checkInDate: Date;

@@ -30,6 +30,7 @@ describe('itineraries', () => {
       ],
       accommodations: [
         {
+          id: "aas45a356d36fdsg62675fgh4fh",
           name: "Hotel Paris",
           address: "123 Eiffel Tower Rd",
           checkInDate: new Date("2024-07-10"),
