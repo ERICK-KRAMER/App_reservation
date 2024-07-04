@@ -1,9 +1,7 @@
-import { PrismaClient } from "@prisma/client";
 import { Reservation } from "../../../entities/reservation/reservation";
 import { IReservation } from "../reservation-repository";
 import { IReservationDTO } from "../../../use-case/reservation/reservationDTO";
-
-const prisma = new PrismaClient();
+import { prisma } from "../../../prisma/prismaClient";
 
 class PrismaPostgressReservation implements IReservation {
   async save(data: Reservation): Promise<Reservation> {

@@ -2,6 +2,7 @@ import cors from "cors";
 import express, { Request, Response } from "express";
 import { createAcommodationUseCaseController, findAccommodationControllerUseCase } from "./use-case/acommodation";
 import { createReservationControllerUseCase } from "./use-case/reservation";
+import { createUserControllerUseCase } from "./use-case/user";
 class App {
   private app = express();
 
@@ -27,6 +28,10 @@ class App {
 
     this.app.post('/reservation/create', (request: Request, response: Response) => {
       return createReservationControllerUseCase.handler(request, response);
+    });
+
+    this.app.post('/user/create', (request: Request, response: Response) => {
+      return createUserControllerUseCase.handler(request, response);
     })
   }
 

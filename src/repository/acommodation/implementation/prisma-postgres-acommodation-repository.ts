@@ -1,9 +1,6 @@
 import { Accommodation } from "../../../entities/accommodation/Accommodation";
 import { AccommodationRepository } from "../acommodation-repository";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
-
+import { prisma } from "../../../prisma/prismaClient";
 class PrismaPostgresAccommodationRepository implements AccommodationRepository {
   async create(accommodation: Accommodation): Promise<Accommodation> {
     const { name, price, address, description, images, email } = accommodation;
