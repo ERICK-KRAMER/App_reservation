@@ -10,6 +10,7 @@ datasource db {
 model Accommodation {
   id          String   @id @default(uuid())
   name        String
+  email       String   @unique
   address     String
   description String
   price       Int

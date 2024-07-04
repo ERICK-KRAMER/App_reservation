@@ -1,5 +1,3 @@
-import { IDocument, IAccommodation, IActivity, IDestination, IExpense, ITransport } from "../../entities/entitiesDTO";
-
 export interface CreateItinerariesDTO {
   name: string;
   userId: string;

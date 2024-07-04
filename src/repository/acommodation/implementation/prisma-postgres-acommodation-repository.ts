@@ -6,13 +6,14 @@ const prisma = new PrismaClient();
 
 class PrismaPostgresAccommodationRepository implements AccommodationRepository {
   async create(accommodation: Accommodation): Promise<Accommodation> {
-    const { name, price, address, description, images } = accommodation;
+    const { name, price, address, description, images, email } = accommodation;
     const createdAccommodation = await prisma.accommodation.create({
       data: {
         name,
         address,
         description,
         price,
+        email,
         created_at: new Date(),
         updated_at: new Date(),
         images: {

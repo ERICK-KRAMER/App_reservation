@@ -6,6 +6,7 @@ class Accommodation {
   id: string;
   name: string;
   address: string;
+  email: string;
   description: string;
   price: number;
   created_at: Date;
@@ -15,6 +16,7 @@ class Accommodation {
   constructor(data: Accommodation) {
     this.id = data.address;
     this.name = data.name;
+    this.email = data.email;
     this.address = data.address;
     this.description = data.description;
     this.price = data.price;

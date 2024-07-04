@@ -3,12 +3,15 @@ import { CreateAccommodationUseCase } from "./create/create-acommodation-use-cas
 import { PrismaPostgresAccommodationRepository } from "../../repository/acommodation/implementation/prisma-postgres-acommodation-repository";
 import { FindAllAccommodationUseCase } from "./findAll/find-accommodation-use-case";
 import { FindAllAccommodationControllerUseCase } from "./findAll/find-accommodation-controller-use-case";
+import { EmailTrapMailProvider } from "../../providers/implement/email-trap-mail-provider";
 
 const prismaPostgresAccommodationRepository = new PrismaPostgresAccommodationRepository();
+const emailtrapProvider = new EmailTrapMailProvider();
 
 //  CRIAÇAO DE ACCOMMODATION;
 const createAcommodationUseCase = new CreateAccommodationUseCase(
-  prismaPostgresAccommodationRepository
+  prismaPostgresAccommodationRepository,
+  emailtrapProvider
 );
 
 const createAcommodationUseCaseController = new CreateAccommodationUseCaseController(

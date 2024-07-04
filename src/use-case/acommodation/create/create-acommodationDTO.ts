@@ -1,6 +1,7 @@
 export interface AccommodationDTO {
   id: string;
   name: string;
+  email: string;
   address: string;
   description: string;
   price: number;
