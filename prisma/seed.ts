@@ -24,7 +24,7 @@ const accommodations: Accommodation[] = [
   {
     name: "Chalé Três Marias",
     address: "Aiuruoca, Brasil",
-    email: "test",
+    email: "chaleTresMarias@test.com",
     description: "A acomodação possui uma cozinha com utensílios básicos para preparar comidas simples, um quarto/sala com uma cama de casal e uma de solteiro, banheiro com chuveiro aquecido a gás e uma deliciosa varanda. O espaço externo da acesso uma cachoeira de água pura vinda da serra.",
     price: 250,
     createdAt: new Date(),
@@ -38,7 +38,7 @@ const accommodations: Accommodation[] = [
   {
     name: "Chalé da Paz - Barra de Guaratiba",
     address: "Barra Guaratiba, Brasil",
-    email: "test",
+    email: "chaleDaPaz@test.com",
     description: "O Chalé da Paz é um loft rústico em eucalipto, novo( inaugurado dia 23/02/2022), construído Em meio a natureza. A varanda com Jacuzzi oferece uma linda vista para a floresta, o mar no horizonte e um por do sol inesquecível Ar condicionado, TV 55 e ampla vista em todos os ambientes. Suíte muito bem decorada com cama King, roupas de cama e toalhas brancas novinhas. A cozinha é toda equipada.Tem fogão, geladeira, microondas, todos os talheres, panelas e louças",
     price: 632,
     createdAt: new Date(),
