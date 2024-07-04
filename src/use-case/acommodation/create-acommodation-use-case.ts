@@ -1,13 +1,13 @@
 import { Accommodation } from "../../entities/accommodation/Accommodation";
-import { IAccommodation } from "../../entities/entitiesDTO";
 import { PrismaPostgresAccommodationRepository } from "../../repository/acommodation/implementation/prisma-postgres-acommodation-repository";
+import { AccommodationDTO } from "./create-acommodationDTO";
 
 class CreateAccommodationUseCase {
   constructor(
     private prismaProsgresAccommodationRepository: PrismaPostgresAccommodationRepository
   ) { }
 
-  async execute(data: IAccommodation) {
+  async execute(data: AccommodationDTO) {
     const accommodationAlreadyExist = await this.prismaProsgresAccommodationRepository.findByName(data.name);
 
     if (accommodationAlreadyExist) {

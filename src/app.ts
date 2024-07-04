@@ -1,5 +1,5 @@
-import express, { Request, Response } from "express";
 import cors from "cors";
+import express, { Request, Response } from "express";
 import { createItinerariesController } from "./use-case/itineraries";
 import { createAcommodationUseCaseController } from "./use-case/acommodation";
 class App {
@@ -21,7 +21,7 @@ class App {
       return createItinerariesController.handle(request, response);
     });
 
-    this.app.post('/acommodation', (request: Request, response: Response) => {
+    this.app.post('/accommodation', (request: Request, response: Response) => {
       return createAcommodationUseCaseController.handle(request, response);
     });
   }

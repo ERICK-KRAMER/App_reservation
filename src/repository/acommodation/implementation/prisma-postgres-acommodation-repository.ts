@@ -1,50 +1,88 @@
 import { Accommodation } from "../../../entities/accommodation/Accommodation";
 import { AccommodationRepository } from "../acommodation-repository";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 class PrismaPostgresAccommodationRepository implements AccommodationRepository {
-  private DB: Accommodation[] = [];
-
   async create(accommodation: Accommodation): Promise<Accommodation> {
-    this.DB.push(accommodation);
-    return accommodation;
+    const { name, price, address, description, images } = accommodation;
+    const createdAccommodation = await prisma.accommodation.create({
+      data: {
+        name,
+        address,
+        description,
+        price,
+        created_at: new Date(),
+        updated_at: new Date(),
+        images: {
+          create: images.map((image) => ({ url: image.url })),
+        },
+      },
+      include: {
+        images: true,
+      },
+    });
+    return createdAccommodation;
   }
 
   async update(accommodation: Accommodation): Promise<Accommodation> {
-    const index = this.DB.findIndex((a) => a.id === accommodation.id);
-    if (index === -1) {
-      throw new Error('Accommodation not found');
-    }
-    this.DB[index] = accommodation;
-    return accommodation;
+    const { id, name, price, address, description, images } = accommodation;
+    const updatedAccommodation = await prisma.accommodation.update({
+      where: {
+        id,
+      },
+      data: {
+        name,
+        address,
+        description,
+        price,
+        updated_at: new Date(),
+        images: {
+          deleteMany: {},
+          create: images.map((image) => ({ url: image.url })),
+        },
+      },
+      include: {
+        images: true,
+      },
+    });
+    return updatedAccommodation;
   }
 
   async delete(id: string): Promise<void> {
-    const index = this.DB.findIndex((a) => a.id === id);
-    if (index === -1) {
-      throw new Error('Accommodation not found');
-    }
-    this.DB.splice(index, 1);
+    await prisma.accommodation.delete({
+      where: { id },
+    });
   }
 
-  async findById(id: string): Promise<Accommodation> {
-    const accommodation = this.DB.find((a) => a.id === id);
-    if (!accommodation) {
-      throw new Error('Accommodation not found');
-    }
+  async findById(id: string): Promise<Accommodation | null> {
+    const accommodation = await prisma.accommodation.findUnique({
+      where: { id },
+      include: {
+        images: true,
+      }
+    });
     return accommodation;
   }
 
   async findAll(): Promise<Accommodation[]> {
-    return this.DB;
+    const accommodation = await prisma.accommodation.findMany({
+      include: {
+        images: true,
+      }
+    });
+    return accommodation;
   }
 
   async findByName(name: string): Promise<Accommodation | null> {
-    const accommodation = this.DB.find((a) => a.name === name);
-    if (!accommodation) {
-      return null
-    }
-    return accommodation;
+    const findAccommodation = await prisma.accommodation.findFirst({
+      where: { name },
+      include: {
+        images: true,
+      }
+    });
+    return findAccommodation;
   }
-}
 
-export { PrismaPostgresAccommodationRepository };
+} export { PrismaPostgresAccommodationRepository };

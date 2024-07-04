@@ -1,20 +1,25 @@
-import { IAccommodation } from "../entitiesDTO";
-import { uuid } from "uuidv4";
-
+interface Image {
+  id: string;
+  url: string;
+}
 class Accommodation {
-  public id?: string;
-  public name: string;
-  public address: string;
-  public checkInDate: Date;
-  public checkOutDate: Date;
-  public reservationDetails?: string;
+  id: string;
+  name: string;
+  address: string;
+  description: string;
+  price: number;
+  created_at: Date;
+  updated_at: Date;
+  images: Image[];
 
-  constructor(data: IAccommodation) {
-    this.id = data.id ? data.id : uuid();
+  constructor(data: Accommodation) {
+    this.id = data.address;
     this.name = data.name;
     this.address = data.address;
-    this.checkInDate = data.checkInDate;
-    this.checkOutDate = data.checkOutDate;
-    this.reservationDetails = data.reservationDetails;
+    this.description = data.description;
+    this.price = data.price;
+    this.created_at = data.created_at;
+    this.updated_at = data.updated_at;
+    this.images = data.images;
   }
 } export { Accommodation };
