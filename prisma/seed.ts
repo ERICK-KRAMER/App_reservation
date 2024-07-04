@@ -61,6 +61,7 @@ const createAccommodations = async () => {
         data: {
           name: accommodation.name,
           address: accommodation.address,
+          email: accommodation.email,
           description: accommodation.description,
           price: accommodation.price,
           created_at: accommodation.createdAt,

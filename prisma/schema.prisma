@@ -8,15 +8,16 @@ datasource db {
 }
 
 model Accommodation {
-  id          String   @id @default(uuid())
+  id          String        @id @default(uuid())
   name        String
-  email       String   @unique
+  email       String        @unique
   address     String
   description String
   price       Int
   created_at  DateTime
   updated_at  DateTime
   images      Image[]
+  reservation Reservation[]
 
   @@map("accommodation")
 }
@@ -28,4 +29,17 @@ model Image {
   accommodationId String
 
   @@map("image")
+}
+
+model Reservation {
+  id              String        @id @default(uuid())
+  name            String
+  accommodation   Accommodation @relation(fields: [accommodationId], references: [id])
+  accommodationId String
+  startDate       DateTime      @unique
+  endDate         DateTime      @unique
+  created_at      DateTime      @default(now())
+  updated_at      DateTime      @updatedAt
+
+  @@map("reservation")
 }

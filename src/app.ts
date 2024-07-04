@@ -1,7 +1,7 @@
 import cors from "cors";
 import express, { Request, Response } from "express";
-import { createItinerariesController } from "./use-case/itineraries";
 import { createAcommodationUseCaseController, findAccommodationControllerUseCase } from "./use-case/acommodation";
+import { createReservationControllerUseCase } from "./use-case/reservation";
 class App {
   private app = express();
 
@@ -17,10 +17,6 @@ class App {
   }
 
   routes() {
-    this.app.post('/itinerary', (request: Request, response: Response) => {
-      return createItinerariesController.handle(request, response);
-    });
-
     this.app.post('/accommodation/create', (request: Request, response: Response) => {
       return createAcommodationUseCaseController.handle(request, response);
     });
@@ -28,6 +24,10 @@ class App {
     this.app.get('/accommodation', (request: Request, response: Response) => {
       return findAccommodationControllerUseCase.handle(request, response);
     });
+
+    this.app.post('/reservation/create', (request: Request, response: Response) => {
+      return createReservationControllerUseCase.handler(request, response);
+    })
   }
 
   listen(port?: number) {
