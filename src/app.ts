@@ -1,7 +1,7 @@
 import cors from "cors";
 import express, { Request, Response } from "express";
 import { createItinerariesController } from "./use-case/itineraries";
-import { createAcommodationUseCaseController } from "./use-case/acommodation";
+import { createAcommodationUseCaseController, findAccommodationControllerUseCase } from "./use-case/acommodation";
 class App {
   private app = express();
 
@@ -21,8 +21,12 @@ class App {
       return createItinerariesController.handle(request, response);
     });
 
-    this.app.post('/accommodation', (request: Request, response: Response) => {
+    this.app.post('/accommodation/create', (request: Request, response: Response) => {
       return createAcommodationUseCaseController.handle(request, response);
+    });
+
+    this.app.get('/accommodation', (request: Request, response: Response) => {
+      return findAccommodationControllerUseCase.handle(request, response);
     });
   }
 

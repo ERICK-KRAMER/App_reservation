@@ -1,5 +1,5 @@
-import { Accommodation } from "../../entities/accommodation/Accommodation";
-import { PrismaPostgresAccommodationRepository } from "../../repository/acommodation/implementation/prisma-postgres-acommodation-repository";
+import { Accommodation } from "../../../entities/accommodation/Accommodation";
+import { PrismaPostgresAccommodationRepository } from "../../../repository/acommodation/implementation/prisma-postgres-acommodation-repository";
 import { AccommodationDTO } from "./create-acommodationDTO";
 
 class CreateAccommodationUseCase {
