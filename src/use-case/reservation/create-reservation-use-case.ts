@@ -1,5 +1,5 @@
 import { Reservation } from "../../entities/reservation/reservation";
-import { IEmailProvider, IMessage } from "../../providers/email-trap-provider";
+import { IEmailProvider, IMessage } from "../../providers/Nodemailer/email-trap-provider";
 import { IReservation } from "../../repository/reservation/reservation-repository";
 
 class CreateReservationUseCase {

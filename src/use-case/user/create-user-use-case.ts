@@ -1,4 +1,4 @@
-import { IEmailProvider, IMessage } from "../../providers/email-trap-provider";
+import { IEmailProvider, IMessage } from "../../providers/Nodemailer/email-trap-provider";
 import { IUserRepository } from "../../repository/user/user-repository";
 import { UserDTO } from "./userDTO";
 

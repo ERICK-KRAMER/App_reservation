@@ -1,4 +1,4 @@
-import { EmailTrapMailProvider } from "../../providers/implement/email-trap-mail-provider";
+import { EmailTrapMailProvider } from "../../providers/Nodemailer/implement/email-trap-mail-provider";
 import { PrismaPostgressReservation } from "../../repository/reservation/implement/prisma-postgres-reservation";
 import { CreateReservationControllerUseCase } from "./create-reervation-controller-use-case";
 import { CreateReservationUseCase } from "./create-reservation-use-case";

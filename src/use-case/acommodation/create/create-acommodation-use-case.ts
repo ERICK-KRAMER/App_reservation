@@ -1,5 +1,5 @@
 import { Accommodation } from "../../../entities/accommodation/Accommodation";
-import { IEmailProvider, IMessage } from "../../../providers/email-trap-provider";
+import { IEmailProvider, IMessage } from "../../../providers/Nodemailer/email-trap-provider";
 import { PrismaPostgresAccommodationRepository } from "../../../repository/acommodation/implementation/prisma-postgres-acommodation-repository";
 import { AccommodationDTO } from "./create-acommodationDTO";
 
