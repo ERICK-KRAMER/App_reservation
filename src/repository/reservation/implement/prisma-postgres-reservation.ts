@@ -5,29 +5,25 @@ import { prisma } from "../../../prisma/prismaClient";
 
 class PrismaPostgressReservation implements IReservation {
   async save(data: Reservation): Promise<Reservation> {
-    const { accommodation, startDate, endDate } = data;
+    const { accommodation, startDate, endDate, user } = data;
+
+    if (!accommodation || !accommodation.id) {
+      throw new Error("Accommodation not found or invalid");
+    }
+
+    if (!user || !user.id) {
+      throw new Error("User not found or invalid");
+    }
 
     const existingReservation = await prisma.reservation.findFirst({
       where: {
         accommodationId: accommodation.id,
-        OR: [
+        AND: [
           {
-            AND: [
-              { startDate: { lte: startDate } },
-              { endDate: { gte: startDate } }
-            ]
+            startDate: { lt: endDate }
           },
           {
-            AND: [
-              { startDate: { lte: endDate } },
-              { endDate: { gte: endDate } }
-            ]
-          },
-          {
-            AND: [
-              { startDate: { gte: startDate } },
-              { endDate: { lte: endDate } }
-            ]
+            endDate: { gt: startDate }
           }
         ]
       }
@@ -37,6 +33,7 @@ class PrismaPostgressReservation implements IReservation {
       throw new Error(`Não é possível fazer a reserva. O período de ${startDate} a ${endDate} já está ocupado.`);
     }
 
+    // Criar a nova reserva
     await prisma.reservation.create({
       data: {
         name: data.name,
@@ -44,6 +41,9 @@ class PrismaPostgressReservation implements IReservation {
         endDate: data.endDate,
         accommodation: {
           connect: { id: accommodation.id }
+        },
+        User: {
+          connect: { id: user.id }
         }
       },
       include: { accommodation: true }
@@ -66,7 +66,7 @@ class PrismaPostgressReservation implements IReservation {
     if (!reservation) {
       return null;
     }
-    return reservation as IReservationDTO;
+    return reservation as unknown as IReservationDTO;
   }
 }
 

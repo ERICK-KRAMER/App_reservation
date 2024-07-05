@@ -32,7 +32,7 @@ class App {
 
     this.app.post('/user/create', (request: Request, response: Response) => {
       return createUserControllerUseCase.handler(request, response);
-    })
+    });
   }
 
   listen(port?: number) {

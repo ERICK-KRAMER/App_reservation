@@ -1,5 +1,4 @@
 import { IEmailProvider, IMessage } from "../../providers/email-trap-provider";
-import { EmailTrapMailProvider } from "../../providers/implement/email-trap-mail-provider";
 import { IUserRepository } from "../../repository/user/user-repository";
 import { UserDTO } from "./userDTO";
 
@@ -33,9 +32,13 @@ class CreateUserUseCase {
       body: "Usuario Criado com sucesso!"
     };
 
-    await this.emailTrapMailProvider.sendEmail(message);
+    const sendEmail = await this.emailTrapMailProvider.sendEmail(message);
 
-    return user;
+    return {
+      message: "User criado com sucesso!",
+      user,
+      sendEmail
+    }
   };
 
 } export { CreateUserUseCase };
