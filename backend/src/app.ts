@@ -5,6 +5,7 @@ import { TokenController } from "./middlewares/errorToken";
 import { createAcommodationUseCaseController, findAccommodationControllerUseCase } from "./use-case/acommodation";
 import { createReservationControllerUseCase } from "./use-case/reservation";
 import { createUserControllerUseCase } from "./use-case/user";
+import { loginControllerUseCase } from "./use-case/login";
 class App {
   private app = express();
   private readonly token = new TokenController();
@@ -25,6 +26,10 @@ class App {
   routes() {
     this.app.get('/', this.token.handler, (request: Request, response: Response) => {
       return response.status(200).send("<h1>Hello World</h1>");
+    });
+
+    this.app.post('/login', (request: Request, response: Response) => {
+      return loginControllerUseCase.handler(request, response);
     });
 
     this.app.post('/accommodation/create', (request: Request, response: Response) => {
