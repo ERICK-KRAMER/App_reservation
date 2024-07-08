@@ -2,24 +2,31 @@ import { JsonWebtokenRepository } from "../../providers/JWT/JWT-repository";
 import { IEmailProvider, IMessage } from "../../providers/Nodemailer/email-trap-provider";
 import { IUserRepository } from "../../repository/user/user-repository";
 import { UserDTO } from "./userDTO";
+import { hash } from "bcryptjs";
 
 class CreateUserUseCase {
   constructor(
     private userRepository: IUserRepository,
     private readonly emailTrapMailProvider: IEmailProvider,
     private readonly TokenProvider: JsonWebtokenRepository,
-  ) { };
+  ) { }
 
   async execute(data: UserDTO) {
-    const { email } = data;
+    const { email, name, password } = data;
 
     const userAlreadyExist = await this.userRepository.findByEmail(email);
 
     if (userAlreadyExist) {
-      throw new Error("User already exist");
+      throw new Error("User already exists");
     }
 
-    const user = await this.userRepository.save(data);
+    const passwordHash = await hash(password, 8);
+
+    const user = await this.userRepository.save({
+      name,
+      email,
+      password: passwordHash,
+    });
 
     const message: IMessage = {
       to: {
@@ -31,22 +38,23 @@ class CreateUserUseCase {
         email: "emailtrap@localhost.com",
       },
       subject: "Welcome to Email Trap",
-      body: "Usuario Criado com sucesso!"
+      body: "Usuário criado com sucesso!"
     };
 
     const sendEmail = await this.emailTrapMailProvider.sendEmail(message);
 
-    const newToken = await this.TokenProvider.TokenGeneration({}, process.env.SECRET_KEY as string, {
-      subject: user.id,
-      expiresIn: "30m",
-    });
+    // const newToken = await this.TokenProvider.TokenGeneration({}, process.env.SECRET_KEY as string, {
+    //   subject: user.id,
+    //   expiresIn: "1d",
+    // });
 
     return {
-      message: "User criado com sucesso!",
+      message: "User created successfully!",
       user,
       sendEmail,
-      token: newToken,
+      // token: newToken,
     }
-  };
+  }
+}
 
-} export { CreateUserUseCase };
+export { CreateUserUseCase };
