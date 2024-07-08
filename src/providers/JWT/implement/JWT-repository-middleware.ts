@@ -1,12 +1,13 @@
-import { JsonWebtokenRepository } from "../JWT-repository";
+import { JsonWebtokenRepository, Options, Payload, } from "../JWT-repository";
 import JWT, { JwtPayload } from "jsonwebtoken";
 
 class Token implements JsonWebtokenRepository {
-  private secretKey = 'b5e3410d-a6a8-4c86-8fe2-53cbe6d96ac3' as string;
+  private secretKey = process.env.SECRET_KEY as string;
 
-  async TokenGeneration(time: string): Promise<string> {
-    const token = JWT.sign({}, this.secretKey, {
-      expiresIn: time
+  async TokenGeneration(payload: Payload, secretOrPrivateKey: string, options: Options): Promise<string> {
+    const token = JWT.sign(payload, secretOrPrivateKey, {
+      subject: options.subject,
+      expiresIn: options.expiresIn,
     });
 
     return token;

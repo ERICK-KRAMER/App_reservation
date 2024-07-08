@@ -1,10 +1,14 @@
 import cors from "cors";
+import dotenv from "dotenv";
 import express, { Request, Response } from "express";
+import { TokenController } from "./middlewares/errorToken";
 import { createAcommodationUseCaseController, findAccommodationControllerUseCase } from "./use-case/acommodation";
 import { createReservationControllerUseCase } from "./use-case/reservation";
 import { createUserControllerUseCase } from "./use-case/user";
 class App {
   private app = express();
+  private readonly token = new TokenController();
+  private readonly dotenv = dotenv;
 
   constructor() {
     this.configs();
@@ -13,11 +17,16 @@ class App {
 
   configs() {
     this.app.use(cors());
+    this.dotenv.config();
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
   }
 
   routes() {
+    this.app.get('/', this.token.handler, (request: Request, response: Response) => {
+      return response.status(200).send("<h1>Hello World</h1>");
+    });
+
     this.app.post('/accommodation/create', (request: Request, response: Response) => {
       return createAcommodationUseCaseController.handle(request, response);
     });
